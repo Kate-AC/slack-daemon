@@ -1,0 +1,13 @@
+version: '3'
+services:
+  webpack:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    volumes:
+      - ./:/projects/slack-daemon
+    command: sh -c "cd app && npm run watch"
+    ports:
+      - "28900:8080"
+    tty: true
+

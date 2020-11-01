@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "outDir": "./bundle/js",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "target": "es5",
+    "jsx": "react",
+    "lib": [
+      "dom",
+      "dom.iterable"
+    ],
+    "allowJs": true,
+    "checkJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
