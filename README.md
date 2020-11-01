@@ -16,4 +16,5 @@ manifest.jsonのあるディレクトリを選択して追加します。
 設定したらwindowが表示されます。
 
 こんな感じ
-https://user-images.githubusercontent.com/25458018/97812476-e4a33100-1cc4-11eb-9db9-ab523fa558b7.png
+<img src="https://user-images.githubusercontent.com/25458018/97812476-e4a33100-1cc4-11eb-9db9-ab523fa558b7.png" alt="サンプル" title="サンプル">
+
