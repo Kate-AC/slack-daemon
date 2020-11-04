@@ -1,6 +1,6 @@
 $BODY_OPACITY:0.2;
 
-#slack-window {
+.default-skin {
   font-size: 14px;
   width: 400px;
   position: fixed;
@@ -12,13 +12,21 @@ $BODY_OPACITY:0.2;
   height: 300px;
   display: none;
 
-  &-wrapper {
+  .wrapper {
     position: relative;
 
     .messages {
       overflow-y: scroll;
       overflow-x: hidden;
       height: 300px;
+
+      .message-box {
+        text-align: left;
+        font-weight: bold;
+        color: #fff;
+        text-shadow: 0.5px 0.5px 0px rgba(0,0,0,1);
+        padding: 0.2rem;
+      }
     }
 
     .background-panel {
@@ -33,11 +41,3 @@ $BODY_OPACITY:0.2;
   }
 }
 
-.message {
-  &-box {
-    font-weight: bold;
-    color: #fff;
-    text-shadow: 0.5px 0.5px 0px rgba(0,0,0,1);
-    padding: 0.2rem;
-  }
-}

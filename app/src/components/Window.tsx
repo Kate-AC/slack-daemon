@@ -4,6 +4,7 @@ import MessageBox from "./MessageBox";
 import startDragAndDrop from "../assets/js/ElementDragAndDrop";
 
 interface Props {
+  moving: boolean;
   nowLoading: boolean;
   messages: Message[];
 }
@@ -50,7 +51,7 @@ export default class Window extends React.Component<Props, State> {
       chrome.storage.local.get(
         ["params", "windowTop", "windowLeft"],
         (values) => {
-          const { windowTop, windowLeft } = values;
+          const { windowTop, windowLeft, current_iid } = values;
           const {
             opacity,
             width,
@@ -79,7 +80,10 @@ export default class Window extends React.Component<Props, State> {
   }
 
   render(): React.ReactElement {
-    const { messages, nowLoading } = this.props;
+    const { messages, nowLoading, moving } = this.props;
+
+    const imageSrc = moving ? chrome.runtime.getURL("app/bundle/images/skin1-b.png") : chrome.runtime.getURL("app/bundle/images/skin1-a.png");
+
     const {
       windowTop,
       windowLeft,
@@ -96,6 +100,7 @@ export default class Window extends React.Component<Props, State> {
     return (
       <article
         id="slack-window"
+        className="skin-1"
         style={{
           top: windowTop,
           left: windowLeft,
@@ -105,22 +110,23 @@ export default class Window extends React.Component<Props, State> {
           fontSize: `${fontSize}px`,
         }}
       >
-        <i className="far fa-eye fa-lg" />
-        <div id="slack-window-wrapper">
+        <div className="wrapper">
           <div
             className="messages"
             style={{
               height: `${height}px`,
             }}
           >
-            {messages.map((message: Message) => (
-              <MessageBox
-                key={message.id}
-                message={message}
-                headerColor={headerColor}
-                bodyColor={bodyColor}
-              />
-            ))}
+            <div className="messages-inner">
+              {messages.map((message: Message) => (
+                <MessageBox
+                  key={message.id}
+                  message={message}
+                  headerColor={headerColor}
+                  bodyColor={bodyColor}
+                />
+              ))}
+            </div>
           </div>
           <div
             className="background-panel"
@@ -130,6 +136,9 @@ export default class Window extends React.Component<Props, State> {
               opacity: Math.abs(opacity - 100) / 100,
             }}
           />
+          <div className="image">
+            <img src={imageSrc} />
+          </div>
         </div>
       </article>
     );

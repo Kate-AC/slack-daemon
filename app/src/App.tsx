@@ -5,6 +5,7 @@ import { Message } from "./interfaces/Common";
 type Props = {};
 
 interface State {
+  moving: boolean;
   nowLoading: boolean;
   messages: Message[];
 }
@@ -29,6 +30,7 @@ export default class App extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      moving: false,
       nowLoading: true,
       messages: [],
     };
@@ -43,7 +45,7 @@ export default class App extends React.Component<Props, State> {
         const array: Message[] = [];
 
         // TODO: 綺麗にしてほしい（希望）
-        messages.matches.forEach((item: Match) => {
+        messages.matches.reverse().forEach((item: Match) => {
           const { iid, username, permalink, ts } = item;
           const { name } = item.channel;
           const parentText = item.text;
@@ -68,17 +70,59 @@ export default class App extends React.Component<Props, State> {
             parentText: parentText || "",
             title: title || "",
             date: App.timeStampToDate(Math.floor(ts)),
+            ts: ts
           });
         });
 
         this.setState({ nowLoading: false, messages: array });
+
+        chrome.storage.local.get(["latestMessageTs"], (values) => {
+          const { latestMessageTs } = values;
+          if (latestMessageTs !== null && latestMessageTs !== array[array.length - 1].ts) {
+            this.ringSe();
+            this.moveImage();
+            chrome.storage.local.set({latestMessageTs: array[array.length - 1].ts});
+          }
+        });
+
+        const messageInner = document.querySelector(".messages-inner");
+        if (messageInner === null) return;
+        messageInner.scrollIntoView(false);
       }
     );
   }
 
-  render(): React.ReactElement {
-    const { messages, nowLoading } = this.state;
+  moveImage(): void {
+    this.setState({ moving: true });
+    setTimeout(() => {
+      this.setState({ moving: false });
+    }, 500);
+  }
 
-    return <Window nowLoading={nowLoading} messages={messages} />;
+  ringSe(): void {
+    const beforeSe = document.getElementById("slack-daemon-se");
+    if (beforeSe !== null && beforeSe.parentNode !== null) {
+      beforeSe.parentNode.removeChild(beforeSe);
+    }
+
+    const se = chrome.runtime.getURL("app/bundle/se/se1.mp3");
+    const iframe = document.createElement("iframe");
+
+    iframe.src = se;
+    iframe.allow = "autoplay";
+    iframe.id = "slack-daemon-se";
+    iframe.style.display = "none";
+
+    const body = document.querySelector("body");
+
+    if (body === null) return;
+
+    body.append(iframe);
+  }
+
+  render(): React.ReactElement {
+    const { messages, nowLoading, moving } = this.state;
+
+    return <Window nowLoading={nowLoading} messages={messages} moving={moving} />;
   }
 }

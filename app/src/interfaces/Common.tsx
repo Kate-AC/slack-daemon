@@ -8,4 +8,5 @@ export interface Message {
   parentText: string;
   title: string;
   date: string;
+  ts: number;
 }

@@ -16,6 +16,7 @@ const func = (tabs: any): void => {
 
     chrome.storage.local.get(["params"], (values) => {
       const { slackToken, query } = values.params;
+      if (typeof slackToken === "undefined" || typeof query === "undefined") return;
       loadMessages(currentTab.id, slackToken, query);
     });
   } catch (e) {
