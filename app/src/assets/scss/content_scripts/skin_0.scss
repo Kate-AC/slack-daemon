@@ -1,6 +1,6 @@
 $BODY_OPACITY:0.2;
 
-.default-skin {
+.skin-0 {
   font-size: 14px;
   width: 400px;
   position: fixed;
@@ -38,6 +38,10 @@ $BODY_OPACITY:0.2;
       background: #000;
       box-shadow: 0 0 1.5rem 1.5rem #000;
     }
+  }
+
+  .image {
+    display: none;
   }
 }
 

@@ -1,7 +1,5 @@
 import axiosBase from "axios";
 
-require.context("./assets/js/", true, /\.(js|ts)$/);
-
 chrome.runtime.onInstalled.addListener(() => {
   setInterval(() => {
     chrome.tabs.query({ active: true, currentWindow: true }, func);

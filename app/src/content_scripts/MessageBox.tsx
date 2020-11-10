@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Message } from "../interfaces/Common";
+import { Message } from "interfaces/Common";
 
 interface Props {
   headerColor: string;

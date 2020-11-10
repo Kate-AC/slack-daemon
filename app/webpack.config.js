@@ -1,60 +1,64 @@
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-  mode: 'development',
+  mode: "development",
+  devtool: "inline-source-map",
   entry: {
-    main: './src/main.tsx',
-    background: './src/background.tsx',
-    popup: './src/popup.tsx'
+    content_scripts: "./src/content_scripts/index.tsx",
+    browser_action:  "./src/browser_action/index.tsx",
+    background:      "./src/background/index.tsx"
   },
-  devtool: 'inline-source-map',
   output:
     {
-      filename: 'js/[name].bundle.js',
-      path: path.resolve(__dirname, 'bundle')
+      filename: "js/[name].bundle.js",
+      path: path.resolve(__dirname, "bundle")
     }
   ,
   module: {
     rules: [
       {
         test:  /\.js$/,
-        loader: 'shebang-loader',
-        exclude: ["/node_mocules/", "/node_modules/public-encrypt/test/test_rsa_pubkey.pem"]
+        loader: "shebang-loader",
+        exclude: ["/node_mocules/"]
       },
       {
         test: /\.tsx?$/,
         exclude: ["/node_mocules/", "/src/assets/scss/"],
         use: [
-          'ts-loader'
+          "ts-loader"
         ]
       },
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
-          'style-loader',
+          "style-loader",
           {
             loader: MiniCssExtractPlugin.loader,
           },
-          'css-loader',
-          'sass-loader',
+          "css-loader",
+          "sass-loader",
         ]
       }
     ]
   },
   resolve: {
-    modules: ['node_modules'],
-    extensions: ['.ts', '.tsx', '.js']
+    modules: [
+      "./node_modules",
+      "./src",
+      "./src/assets/js"
+    ],
+    extensions: [".ts", ".tsx", ".js", "jsx"]
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'css/main.css',
+      filename: "css/[name].css",
     })
   ],
   optimization: {
     splitChunks: {
-      name: 'common',
-      chunks: 'initial',
+      name: "common",
+      chunks: "initial",
     }
   }
 };

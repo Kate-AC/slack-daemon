@@ -1,7 +1,7 @@
 import * as React from "react";
-import { Message } from "../interfaces/Common";
-import MessageBox from "./MessageBox";
-import startDragAndDrop from "../assets/js/ElementDragAndDrop";
+import { Message } from "interfaces/Common";
+import MessageBox from "content_scripts/MessageBox";
+import startDragAndDrop from "ElementDragAndDrop";
 
 interface Props {
   moving: boolean;
@@ -20,6 +20,7 @@ type State = {
   headerColor: string;
   bodyColor: string;
   hidden: boolean;
+  skinName: string;
 };
 
 export default class Window extends React.Component<Props, State> {
@@ -37,6 +38,7 @@ export default class Window extends React.Component<Props, State> {
       headerColor: "ffffff",
       bodyColor: "#ffffff",
       hidden: false,
+      skinName: "skin-0"
     };
 
     this.loadParams();
@@ -61,7 +63,9 @@ export default class Window extends React.Component<Props, State> {
             headerColor,
             bodyColor,
             hidden,
+            skinName
           } = values.params;
+
           this.setState({
             windowTop,
             windowLeft,
@@ -73,6 +77,7 @@ export default class Window extends React.Component<Props, State> {
             headerColor,
             bodyColor,
             hidden,
+            skinName
           });
         }
       );
@@ -95,12 +100,13 @@ export default class Window extends React.Component<Props, State> {
       headerColor,
       bodyColor,
       hidden,
+      skinName
     } = this.state;
 
     return (
       <article
         id="slack-window"
-        className="skin-1"
+        className={skinName}
         style={{
           top: windowTop,
           left: windowLeft,

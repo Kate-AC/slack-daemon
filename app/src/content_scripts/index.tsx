@@ -1,9 +1,7 @@
 import * as React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
-
-require.context("./assets/scss/", true, /\.(sa|sc|c)ss$/);
-require.context("./assets/js/", true, /\.(js|ts)$/);
+import App from "content_scripts/App";
+require.context("../assets/scss/content_scripts", true, /\.(sa|sc|c)ss$/);
 
 const ROOT_DOM_NAME = "slack-daemon-root";
 const rootDom = document.createElement("div");

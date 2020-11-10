@@ -46,6 +46,7 @@ export default class ConfigWindow extends React.Component<Props, State> {
       if (options === null) return;
 
       const { elements } = options;
+
       const {
         slackToken,
         query,
@@ -57,7 +58,14 @@ export default class ConfigWindow extends React.Component<Props, State> {
         headerColor,
         bodyColor,
         hidden,
+        skinName
       } = values.params;
+
+      const skinId = "#" + ((typeof skinName === "undefined") ? "skin-0" : skinName);
+console.log(skinId);
+      const selectedSkin = document.querySelector(skinId);
+
+      if (selectedSkin === null) return;
 
       (elements[0] as HTMLInputElement).value = slackToken;
       (elements[1] as HTMLInputElement).value = query;
@@ -69,6 +77,7 @@ export default class ConfigWindow extends React.Component<Props, State> {
       (elements[7] as HTMLInputElement).value = headerColor;
       (elements[8] as HTMLInputElement).value = bodyColor;
       (elements[9] as HTMLInputElement).checked = hidden;
+      (selectedSkin as HTMLInputElement).checked = true;
     });
   }
 
@@ -79,8 +88,9 @@ export default class ConfigWindow extends React.Component<Props, State> {
 
     saveButton.addEventListener("click", () => {
       const options = document.querySelector("#options") as HTMLFormElement;
+      const selectedSkin = document.querySelector('input[name="skin"]:checked');
 
-      if (options === null) return;
+      if (options === null || selectedSkin === null) return;
 
       const { elements } = options;
 
@@ -95,6 +105,7 @@ export default class ConfigWindow extends React.Component<Props, State> {
         headerColor: (elements[7] as HTMLInputElement).value,
         bodyColor: (elements[8] as HTMLInputElement).value,
         hidden: (elements[9] as HTMLInputElement).checked,
+        skinName: (selectedSkin as HTMLInputElement).value
       };
 
       try {
@@ -186,6 +197,19 @@ export default class ConfigWindow extends React.Component<Props, State> {
         <div className="item">
           <div>ウィンドウ非表示:</div>
           <input type="checkbox" />
+        </div>
+        <div>
+          <div>スキン選択:</div>
+          <div>
+            <div>
+              <input type="radio" id="skin-0" value="skin-0" name="skin" />
+              <label htmlFor="skin-0">デフォルト</label>
+            </div>
+            <div>
+              <input type="radio" id="skin-1" value="skin-1" name="skin" />
+              <label htmlFor="skin-1">ゆっくり霊夢</label>
+            </div>
+          </div>
         </div>
         <div className="item">
           <button type="button" ref={this.saveButtonRef}>

@@ -34,10 +34,10 @@
       ],
       "js": [
         "./app/bundle/js/common.bundle.js",
-        "./app/bundle/js/main.bundle.js"
+        "./app/bundle/js/content_scripts.bundle.js"
       ],
       "css": [
-        "./app/bundle/css/main.css"
+        "./app/bundle/css/content_scripts.css"
       ]
     }
   ],

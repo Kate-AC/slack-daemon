@@ -1,6 +1,6 @@
 import * as React from "react";
-import Window from "./components/Window";
-import { Message } from "./interfaces/Common";
+import Window from "content_scripts/Window";
+import { Message } from "interfaces/Common";
 
 type Props = {};
 
